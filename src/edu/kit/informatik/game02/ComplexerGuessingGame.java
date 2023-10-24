@@ -7,6 +7,7 @@ package edu.kit.informatik.game02;
  * @version 1.0.0
  */
 public class ComplexerGuessingGame {
+    private static final String NUMBER_IS_D = "The right number is %d! :)";
     /**
      * Message, if the number has not been guessed
      */
@@ -20,18 +21,20 @@ public class ComplexerGuessingGame {
      */
     private final Interval interval;
     /**
-     * This is the number which has been guessed
+     * This is the last guess which has been guessed
      */
-    private int correctGuess = 0;
+    private Guess guess;
     /**
      * This boolean indicates, if the application is still running
      */
-    private boolean isRunning = true;
+    private boolean isRunning;
     /**
      * This constructor initializes the {@link Interval #interval} with the default values of 0 and 100
      */
     public ComplexerGuessingGame() {
         this.interval = new Interval(0, 100);
+        this.isRunning = true;
+        this.guess = new Guess(false, 50);
     }
     /**
      * This method returns the accurate message, of the latest guess. Has to be called
@@ -39,12 +42,16 @@ public class ComplexerGuessingGame {
      * @return returns the message mapping to the current game state
      */
     public String getMessage() {
-        return isRunning ?
-                String.format(GUESS_AGAIN,  interval.getMiddle())
-                : String.format(RIGHT_NUMBER, correctGuess);
+        if (guess.hasBeenGuessed()) {
+            return NUMBER_IS_D.formatted(guess.guess());
+        } else if (!isRunning) {
+            return RIGHT_NUMBER.formatted(guess.guess());
+        } else {
+            return GUESS_AGAIN.formatted(interval.getMiddle());
+        }
     }
     /**
-     * This method checks, if the application is still running so the {@link #correctGuess}
+     * This method checks, if the application is still running so the {@link #guess}
      * has not been found
      * @return if the application is still running
      */
@@ -58,7 +65,7 @@ public class ComplexerGuessingGame {
     public void narrowInterval(NarrowingIntervalPossibilities shiftDirection) {
         switch(shiftDirection) {
             case GUESSED :
-                this.correctGuess = interval.getMiddle();
+                this.guess = new Guess(true, interval.getLowerBound());
                 isRunning = false;
                 break;
             case HIGHER :
@@ -75,7 +82,7 @@ public class ComplexerGuessingGame {
     private void shiftLower() {
         if (Math.abs(interval.getUpperBound() - interval.getLowerBound()) <= 1) {
             this.isRunning = false;
-            this.correctGuess = interval.getLowerBound();
+            this.guess = new Guess(false, interval.getLowerBound());
         } else {
             interval.shiftIntervalDown();
         }
@@ -86,7 +93,7 @@ public class ComplexerGuessingGame {
     private void shiftHigher() {
         if (Math.abs(interval.getUpperBound() - interval.getLowerBound()) <= 1) {
             this.isRunning = false;
-            this.correctGuess = interval.getUpperBound();
+            this.guess = new Guess(false, interval.getUpperBound());
         } else {
             interval.shiftIntervalUp();
         }

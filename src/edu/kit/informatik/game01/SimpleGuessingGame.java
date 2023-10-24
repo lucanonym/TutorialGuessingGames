@@ -20,10 +20,17 @@ public class SimpleGuessingGame {
      * This is the guessed number, the user has to guess
      */
     private final RandomNumber guessedNumber;
-
+    /**
+     * This is the latest guess
+     */
     private int latestGuess;
+    /**
+     * This boolean indicates, if the application is still running
+     */
     private boolean isRunning = true;
-
+    /**
+     * This is the number of guesses the user has made
+     */
     private int numberOfGuesses = 0;
 
 
