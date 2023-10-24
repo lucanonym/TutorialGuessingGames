@@ -8,18 +8,18 @@ package edu.kit.informatik.game01;
 public class SimpleGuessingGame {
 
     /**
-     * Message, if the {@link GuessedNumber} has not been guessed
+     * Message, if the {@link RandomNumber} has not been guessed
      */
     private static final String NOT_THE_RIGHT_NUMBER = "%d is not the right number, you already guessed %d times!";
 
     /**
-     * Message, if the {@link GuessedNumber} has been guessed
+     * Message, if the {@link RandomNumber} has been guessed
      */
     private static final String RIGHT_NUMBER = "%d is the right number. You guessed %d times!";
     /**
      * This is the guessed number, the user has to guess
      */
-    private final GuessedNumber guessedNumber;
+    private final RandomNumber guessedNumber;
 
     private int latestGuess;
     private boolean isRunning = true;
@@ -28,11 +28,11 @@ public class SimpleGuessingGame {
 
 
     public SimpleGuessingGame() {
-        this.guessedNumber = new GuessedNumber();
+        this.guessedNumber = new RandomNumber();
     }
 
     /**
-     * This method checks, if the application is still running so the {@link GuessedNumber}
+     * This method checks, if the application is still running so the {@link RandomNumber}
      * has not been guessed
      *
      * @return if the application is still running
@@ -43,7 +43,7 @@ public class SimpleGuessingGame {
     }
 
     /**
-     * This method calls {@link GuessedNumber#guessNumber(int)} to check if the number
+     * This method calls {@link RandomNumber#guessNumber(int)} to check if the number
      * has been guessed. Note that the {@link SimpleGuessingGame} is running, if the number has not
      * been guessed correctly.
      *

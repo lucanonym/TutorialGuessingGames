@@ -2,6 +2,11 @@ package edu.kit.informatik.game01;
 
 import java.util.Scanner;
 
+/**
+ * This class models the application that runs the game.
+ * @author Luca
+ * @version 1.0.0
+ */
 public class Application {
     /**
      * Message to introduce the game
@@ -19,6 +24,10 @@ public class Application {
             runGame(scanner);
         }
     }
+    /**
+     * This method runs the game
+     * @param scanner the scanner which is used to read the input
+     */
     private void runGame(Scanner scanner) {
         System.out.println(INITIAL_GUESS);
         SimpleGuessingGame game = new SimpleGuessingGame();
